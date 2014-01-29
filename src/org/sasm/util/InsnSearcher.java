@@ -278,7 +278,7 @@ public class InsnSearcher {
 	}
 
 	/**
-	 * Finds the index of the given single-pattern.
+	 * Finds the last index of the given single-pattern.
 	 *
 	 * @param mn The method to search within.
 	 * @param pattern A single-pattern string ("getfield[desc=I]")
