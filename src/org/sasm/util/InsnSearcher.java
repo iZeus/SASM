@@ -77,8 +77,7 @@ public class InsnSearcher {
 
 	private static boolean equals(AbstractInsnNode ain, Map<String, String> insn) {
 		String opcode = insn.get("opcode");
-		if (opcode.equals("*")) return true;
-		if (!Integer.toString(ain.getOpcode()).equals(opcode)) return false;
+		if (!opcode.equals("*") && !Integer.toString(ain.getOpcode()).equals(opcode)) return false;
 		String owner = insn.get("owner");
 		String name = insn.get("name");
 		String desc = insn.get("desc");
