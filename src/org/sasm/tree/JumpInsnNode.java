@@ -40,7 +40,7 @@ public class JumpInsnNode extends AbstractInsnNode {
      *            IF_ICMPGE, IF_ICMPGT, IF_ICMPLE, IF_ACMPEQ, IF_ACMPNE, GOTO,
      *            JSR, IFNULL or IFNONNULL.
      */
-    public void setOpcode(final int opcode) {
+    public void setOpcode(int opcode) {
         this.opcode = opcode;
     }
 
@@ -50,13 +50,13 @@ public class JumpInsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         mv.visitJumpInsn(opcode, label.getLabel());
         acceptAnnotations(mv);
     }
 
     @Override
-    public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
+    public AbstractInsnNode clone(Map<LabelNode, LabelNode> labels) {
         return new JumpInsnNode(opcode, clone(label, labels)).cloneAnnotations(this);
     }
 }

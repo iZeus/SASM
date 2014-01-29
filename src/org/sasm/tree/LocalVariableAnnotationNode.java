@@ -105,7 +105,7 @@ public class LocalVariableAnnotationNode extends TypeAnnotationNode {
      *
      * @param mv the visitor that must visit this annotation.
      */
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         Label[] start = new Label[this.start.size()];
         Label[] end = new Label[this.end.size()];
         int[] index = new int[this.index.size()];

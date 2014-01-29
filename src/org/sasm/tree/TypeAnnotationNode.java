@@ -36,7 +36,7 @@ public class TypeAnnotationNode extends AnnotationNode {
      * @param desc
      *            the class descriptor of the annotation class.
      */
-    public TypeAnnotationNode(final int typeRef, final TypePath typePath, final String desc) {
+    public TypeAnnotationNode(int typeRef, TypePath typePath, String desc) {
         this(Opcodes.ASM5, typeRef, typePath, desc);
     }
 
@@ -55,7 +55,7 @@ public class TypeAnnotationNode extends AnnotationNode {
      * @param desc
      *            the class descriptor of the annotation class.
      */
-    public TypeAnnotationNode(final int api, final int typeRef, final TypePath typePath, final String desc) {
+    public TypeAnnotationNode(int api, int typeRef, TypePath typePath, String desc) {
         super(api, desc);
         this.typeRef = typeRef;
         this.typePath = typePath;

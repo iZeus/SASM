@@ -89,7 +89,7 @@ final class Item {
      * @param index
      *            index of the item to be constructed.
      */
-    Item(final int index) {
+    Item(int index) {
         this.index = index;
     }
 
@@ -101,7 +101,7 @@ final class Item {
      * @param i
      *            the item that must be copied into the item to be constructed.
      */
-    Item(final int index, final Item i) {
+    Item(int index, Item i) {
         this.index = index;
         type = i.type;
         intVal = i.intVal;
@@ -118,7 +118,7 @@ final class Item {
      * @param intVal
      *            the value of this item.
      */
-    void set(final int intVal) {
+    void set(int intVal) {
         this.type = ClassWriter.INT;
         this.intVal = intVal;
         this.hashCode = 0x7FFFFFFF & (type + intVal);
@@ -130,7 +130,7 @@ final class Item {
      * @param longVal
      *            the value of this item.
      */
-    void set(final long longVal) {
+    void set(long longVal) {
         this.type = ClassWriter.LONG;
         this.longVal = longVal;
         this.hashCode = 0x7FFFFFFF & (type + (int) longVal);
@@ -142,7 +142,7 @@ final class Item {
      * @param floatVal
      *            the value of this item.
      */
-    void set(final float floatVal) {
+    void set(float floatVal) {
         this.type = ClassWriter.FLOAT;
         this.intVal = Float.floatToRawIntBits(floatVal);
         this.hashCode = 0x7FFFFFFF & (type + (int) floatVal);
@@ -154,7 +154,7 @@ final class Item {
      * @param doubleVal
      *            the value of this item.
      */
-    void set(final double doubleVal) {
+    void set(double doubleVal) {
         this.type = ClassWriter.DOUBLE;
         this.longVal = Double.doubleToRawLongBits(doubleVal);
         this.hashCode = 0x7FFFFFFF & (type + (int) doubleVal);
@@ -172,8 +172,7 @@ final class Item {
      * @param strVal3
      *            third part of the value of this item.
      */
-    void set(final int type, final String strVal1, final String strVal2,
-            final String strVal3) {
+    void set(int type, String strVal1, String strVal2, String strVal3) {
         this.type = type;
         this.strVal1 = strVal1;
         this.strVal2 = strVal2;
@@ -243,7 +242,7 @@ final class Item {
      * @return <tt>true</tt> if the given item if equal to this one,
      *         <tt>false</tt> otherwise.
      */
-    boolean isEqualTo(final Item i) {
+    boolean isEqualTo(Item i) {
         switch (type) {
         case ClassWriter.UTF8:
         case ClassWriter.STR:

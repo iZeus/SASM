@@ -44,7 +44,7 @@ public class MethodInsnNode extends AbstractInsnNode {
      * @param desc
      *            the method's descriptor (see {@link org.sasm.Type}).
      */
-    public MethodInsnNode(final int opcode, final String owner, final String name, final String desc) {
+    public MethodInsnNode(int opcode, String owner, String name, String desc) {
         super(opcode);
         this.owner = owner;
         this.name = name;
@@ -58,7 +58,7 @@ public class MethodInsnNode extends AbstractInsnNode {
      *            the new instruction opcode. This opcode must be INVOKEVIRTUAL,
      *            INVOKESPECIAL, INVOKESTATIC or INVOKEINTERFACE.
      */
-    public void setOpcode(final int opcode) {
+    public void setOpcode(int opcode) {
         this.opcode = opcode;
     }
 
@@ -68,12 +68,12 @@ public class MethodInsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         mv.visitMethodInsn(opcode, owner, name, desc);
     }
 
     @Override
-    public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
+    public AbstractInsnNode clone(Map<LabelNode, LabelNode> labels) {
         return new MethodInsnNode(opcode, owner, name, desc);
     }
 }

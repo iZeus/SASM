@@ -45,7 +45,7 @@ public class InvokeDynamicInsnNode extends AbstractInsnNode {
      * @param bsmArgs
      *            the boostrap constant arguments.
      */
-    public InvokeDynamicInsnNode(final String name, final String desc, final Handle bsm, final Object... bsmArgs) {
+    public InvokeDynamicInsnNode(String name, String desc, Handle bsm, Object... bsmArgs) {
         super(Opcodes.INVOKEDYNAMIC);
         this.name = name;
         this.desc = desc;
@@ -59,13 +59,13 @@ public class InvokeDynamicInsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         mv.visitInvokeDynamicInsn(name, desc, bsm, bsmArgs);
         acceptAnnotations(mv);
     }
 
     @Override
-    public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
+    public AbstractInsnNode clone(Map<LabelNode, LabelNode> labels) {
         return new InvokeDynamicInsnNode(name, desc, bsm, bsmArgs).cloneAnnotations(this);
     }
 }

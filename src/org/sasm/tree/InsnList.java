@@ -74,7 +74,7 @@ public class InsnList implements Serializable {
      * @throws IndexOutOfBoundsException
      *             if (index &lt; 0 || index &gt;= size()).
      */
-    public AbstractInsnNode get(final int index) {
+    public AbstractInsnNode get(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
@@ -93,7 +93,7 @@ public class InsnList implements Serializable {
      *            an instruction.
      * @return <tt>true</tt> if the given instruction belongs to this list.
      */
-    public boolean contains(final AbstractInsnNode insn) {
+    public boolean contains(AbstractInsnNode insn) {
         AbstractInsnNode i = first;
         while (i != null && i != insn) {
             i = i.next;
@@ -115,7 +115,7 @@ public class InsnList implements Serializable {
      *         to this list</i>. Use {@link #contains contains} to test if an
      *         instruction belongs to an instruction list or not.
      */
-    public int indexOf(final AbstractInsnNode insn) {
+    public int indexOf(AbstractInsnNode insn) {
         if (cache == null) {
             cache = toArray();
         }
@@ -128,7 +128,7 @@ public class InsnList implements Serializable {
      * @param mv
      *            the method visitor that must visit the instructions.
      */
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         AbstractInsnNode insn = first;
         while (insn != null) {
             mv.insn = insn;
@@ -182,7 +182,7 @@ public class InsnList implements Serializable {
      *            another instruction, <i>which must not belong to any
      *            {@link InsnList}</i>.
      */
-    public void set(final AbstractInsnNode location, final AbstractInsnNode insn) {
+    public void set(AbstractInsnNode location, AbstractInsnNode insn) {
         AbstractInsnNode next = location.next;
         insn.next = next;
         if (next != null) {
@@ -216,7 +216,7 @@ public class InsnList implements Serializable {
      *            an instruction, <i>which must not belong to any
      *            {@link InsnList}</i>.
      */
-    public void add(final AbstractInsnNode insn) {
+    public void add(AbstractInsnNode insn) {
         ++size;
         if (last == null) {
             first = insn;
@@ -237,7 +237,7 @@ public class InsnList implements Serializable {
      *            an instruction list, which is cleared during the process. This
      *            list must be different from 'this'.
      */
-    public void add(final InsnList insns) {
+    public void add(InsnList insns) {
         if (insns.size == 0) {
             return;
         }
@@ -262,7 +262,7 @@ public class InsnList implements Serializable {
      *            an instruction, <i>which must not belong to any
      *            {@link InsnList}</i>.
      */
-    public void insert(final AbstractInsnNode insn) {
+    public void insert(AbstractInsnNode insn) {
         ++size;
         if (first == null) {
             first = insn;
@@ -283,7 +283,7 @@ public class InsnList implements Serializable {
      *            an instruction list, which is cleared during the process. This
      *            list must be different from 'this'.
      */
-    public void insert(final InsnList insns) {
+    public void insert(InsnList insns) {
         if (insns.size == 0) {
             return;
         }
@@ -311,7 +311,7 @@ public class InsnList implements Serializable {
      *            the instruction to be inserted, <i>which must not belong to
      *            any {@link InsnList}</i>.
      */
-    public void insert(final AbstractInsnNode location, final AbstractInsnNode insn) {
+    public void insert(AbstractInsnNode location, AbstractInsnNode insn) {
         ++size;
         AbstractInsnNode next = location.next;
         if (next == null) {
@@ -336,7 +336,7 @@ public class InsnList implements Serializable {
      *            the instruction list to be inserted, which is cleared during
      *            the process. This list must be different from 'this'.
      */
-    public void insert(final AbstractInsnNode location, final InsnList insns) {
+    public void insert(AbstractInsnNode location, InsnList insns) {
         if (insns.size == 0) {
             return;
         }
@@ -366,7 +366,7 @@ public class InsnList implements Serializable {
      *            the instruction to be inserted, <i>which must not belong to
      *            any {@link InsnList}</i>.
      */
-    public void insertBefore(final AbstractInsnNode location, final AbstractInsnNode insn) {
+    public void insertBefore(AbstractInsnNode location, AbstractInsnNode insn) {
         ++size;
         AbstractInsnNode prev = location.prev;
         if (prev == null) {
@@ -391,7 +391,7 @@ public class InsnList implements Serializable {
      *            the instruction list to be inserted, which is cleared during
      *            the process. This list must be different from 'this'.
      */
-    public void insertBefore(final AbstractInsnNode location, final InsnList insns) {
+    public void insertBefore(AbstractInsnNode location, InsnList insns) {
         if (insns.size == 0) {
             return;
         }
@@ -417,7 +417,7 @@ public class InsnList implements Serializable {
      * @param insn
      *            the instruction <i>of this list</i> that must be removed.
      */
-    public void remove(final AbstractInsnNode insn) {
+    public void remove(AbstractInsnNode insn) {
         --size;
         AbstractInsnNode next = insn.next;
         AbstractInsnNode prev = insn.prev;
@@ -451,7 +451,7 @@ public class InsnList implements Serializable {
      *            if the instructions must be marked as no longer belonging to
      *            any {@link InsnList}.
      */
-    void removeAll(final boolean mark) {
+    void removeAll(boolean mark) {
         if (mark) {
             AbstractInsnNode insn = first;
             while (insn != null) {

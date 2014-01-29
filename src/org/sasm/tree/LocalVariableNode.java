@@ -59,8 +59,7 @@ public class LocalVariableNode {
      * @param index
      *            the local variable's index.
      */
-    public LocalVariableNode(final String name, final String desc, final String signature, final LabelNode start,
-                             final LabelNode end, final int index) {
+    public LocalVariableNode(String name, String desc, String signature, LabelNode start, LabelNode end, int index) {
         this.name = name;
         this.desc = desc;
         this.signature = signature;
@@ -75,7 +74,7 @@ public class LocalVariableNode {
      * @param mv
      *            a method visitor.
      */
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         mv.visitLocalVariable(name, desc, signature, start.getLabel(), end.getLabel(), index);
     }
 }

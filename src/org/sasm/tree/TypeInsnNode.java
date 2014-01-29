@@ -28,7 +28,7 @@ public class TypeInsnNode extends AbstractInsnNode {
      *            the val of the instruction to be constructed. This val
      *            is an internal name (see {@link org.sasm.Type}).
      */
-    public TypeInsnNode(final int opcode, final String desc) {
+    public TypeInsnNode(int opcode, String desc) {
         super(opcode);
         this.desc = desc;
     }
@@ -40,7 +40,7 @@ public class TypeInsnNode extends AbstractInsnNode {
      *            the new instruction opcode. This opcode must be NEW,
      *            ANEWARRAY, CHECKCAST or INSTANCEOF.
      */
-    public void setOpcode(final int opcode) {
+    public void setOpcode(int opcode) {
         this.opcode = opcode;
     }
 
@@ -50,13 +50,13 @@ public class TypeInsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         mv.visitTypeInsn(opcode, desc);
         acceptAnnotations(mv);
     }
 
     @Override
-    public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
+    public AbstractInsnNode clone(Map<LabelNode, LabelNode> labels) {
         return new TypeInsnNode(opcode, desc).cloneAnnotations(this);
     }
 }

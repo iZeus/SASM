@@ -43,7 +43,7 @@ public class FieldInsnNode extends AbstractInsnNode {
      * @param desc
      *            the field's descriptor (see {@link org.sasm.Type}).
      */
-    public FieldInsnNode(final int opcode, final String owner, final String name, final String desc) {
+    public FieldInsnNode(int opcode, String owner, String name, String desc) {
         super(opcode);
         this.owner = owner;
         this.name = name;
@@ -57,7 +57,7 @@ public class FieldInsnNode extends AbstractInsnNode {
      *            the new instruction opcode. This opcode must be GETSTATIC,
      *            PUTSTATIC, GETFIELD or PUTFIELD.
      */
-    public void setOpcode(final int opcode) {
+    public void setOpcode(int opcode) {
         this.opcode = opcode;
     }
 
@@ -67,13 +67,13 @@ public class FieldInsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         mv.visitFieldInsn(opcode, owner, name, desc);
         acceptAnnotations(mv);
     }
 
     @Override
-    public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
+    public AbstractInsnNode clone(Map<LabelNode, LabelNode> labels) {
         return new FieldInsnNode(opcode, owner, name, desc).cloneAnnotations(this);
     }
 }

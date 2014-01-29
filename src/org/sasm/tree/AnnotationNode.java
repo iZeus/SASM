@@ -39,7 +39,7 @@ public class AnnotationNode extends AnnotationVisitor {
      * @param desc
      *            the class descriptor of the annotation class.
      */
-    public AnnotationNode(final String desc) {
+    public AnnotationNode(String desc) {
         this(Opcodes.ASM5, desc);
     }
 
@@ -52,7 +52,7 @@ public class AnnotationNode extends AnnotationVisitor {
      * @param desc
      *            the class descriptor of the annotation class.
      */
-    public AnnotationNode(final int api, final String desc) {
+    public AnnotationNode(int api, String desc) {
         super(api);
         this.desc = desc;
     }
@@ -63,7 +63,7 @@ public class AnnotationNode extends AnnotationVisitor {
      * @param values
      *            where the visited values must be stored.
      */
-    AnnotationNode(final List<Object> values) {
+    AnnotationNode(List<Object> values) {
         super(Opcodes.ASM5);
         this.values = values;
     }
@@ -73,7 +73,7 @@ public class AnnotationNode extends AnnotationVisitor {
     // ------------------------------------------------------------------------
 
     @Override
-    public void visit(final String name, final Object value) {
+    public void visit(String name, Object value) {
         if (values == null) {
             values = new ArrayList<>(this.desc != null ? 2 : 1);
         }
@@ -84,7 +84,7 @@ public class AnnotationNode extends AnnotationVisitor {
     }
 
     @Override
-    public void visitEnum(final String name, final String desc,
+    public void visitEnum(String name, String desc,
             final String value) {
         if (values == null) {
             values = new ArrayList<>(this.desc != null ? 2 : 1);
@@ -96,8 +96,7 @@ public class AnnotationNode extends AnnotationVisitor {
     }
 
     @Override
-    public AnnotationVisitor visitAnnotation(final String name,
-            final String desc) {
+    public AnnotationVisitor visitAnnotation(String name, String desc) {
         if (values == null) {
             values = new ArrayList<>(this.desc != null ? 2 : 1);
         }
@@ -110,7 +109,7 @@ public class AnnotationNode extends AnnotationVisitor {
     }
 
     @Override
-    public AnnotationVisitor visitArray(final String name) {
+    public AnnotationVisitor visitArray(String name) {
         if (values == null) {
             values = new ArrayList<>(this.desc != null ? 2 : 1);
         }
@@ -140,7 +139,7 @@ public class AnnotationNode extends AnnotationVisitor {
      *            an ASM API version. Must be one of {@link Opcodes#ASM4} or
      *            {@link Opcodes#ASM5}.
      */
-    public void check(final int api) {
+    public void check(int api) {
         // nothing to do
     }
 
@@ -150,7 +149,7 @@ public class AnnotationNode extends AnnotationVisitor {
      * @param av
      *            an annotation visitor. Maybe <tt>null</tt>.
      */
-    public void accept(final AnnotationVisitor av) {
+    public void accept(AnnotationVisitor av) {
         if (av != null) {
             if (values != null) {
                 for (int i = 0; i < values.size(); i += 2) {
@@ -173,7 +172,7 @@ public class AnnotationNode extends AnnotationVisitor {
      * @param value
      *            the actual value.
      */
-    static void accept(final AnnotationVisitor av, final String name, final Object value) {
+    static void accept(AnnotationVisitor av, String name, Object value) {
         if (av != null) {
             if (value instanceof String[]) {
                 String[] typeconst = (String[]) value;

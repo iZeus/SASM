@@ -28,7 +28,7 @@ public abstract class FieldVisitor {
      *            the ASM API version implemented by this visitor. Must be one
      *            of {@link Opcodes#ASM4} or {@link Opcodes#ASM5}.
      */
-    public FieldVisitor(final int api) {
+    public FieldVisitor(int api) {
         this(api, null);
     }
 
@@ -42,7 +42,7 @@ public abstract class FieldVisitor {
      *            the field visitor to which this visitor must delegate method
      *            calls. May be null.
      */
-    public FieldVisitor(final int api, final FieldVisitor fv) {
+    public FieldVisitor(int api, FieldVisitor fv) {
         if (api != Opcodes.ASM4 && api != Opcodes.ASM5) {
             throw new IllegalArgumentException();
         }

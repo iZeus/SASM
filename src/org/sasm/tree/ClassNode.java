@@ -164,7 +164,7 @@ public class ClassNode extends ClassVisitor {
 	 * @param api the ASM API version implemented by this visitor. Must be one
 	 *            of {@link Opcodes#ASM4} or {@link Opcodes#ASM5}.
 	 */
-	public ClassNode(final int api) {
+	public ClassNode(int api) {
 		super(api);
 		this.interfaces = new ArrayList<>();
 		this.innerClasses = new ArrayList<>();
@@ -177,8 +177,7 @@ public class ClassNode extends ClassVisitor {
 	// ------------------------------------------------------------------------
 
 	@Override
-	public void visit(final int version, final int access, final String name, final String signature,
-	                  final String superName, final String[] interfaces) {
+	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
 		this.version = version;
 		this.access = access;
 		this.name = name;
@@ -190,21 +189,20 @@ public class ClassNode extends ClassVisitor {
 	}
 
 	@Override
-	public void visitSource(final String file, final String debug) {
+	public void visitSource(String file, String debug) {
 		sourceFile = file;
 		sourceDebug = debug;
 	}
 
 	@Override
-	public void visitOuterClass(final String owner, final String name,
-	                            final String desc) {
+	public void visitOuterClass(String owner, String name, String desc) {
 		outerClass = owner;
 		outerMethod = name;
 		outerMethodDesc = desc;
 	}
 
 	@Override
-	public AnnotationVisitor visitAnnotation(final String desc, final boolean visible) {
+	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
 		AnnotationNode an = new AnnotationNode(desc);
 		if (visible) {
 			if (visibleAnnotations == null) {
@@ -246,14 +244,13 @@ public class ClassNode extends ClassVisitor {
 	}
 
 	@Override
-	public void visitInnerClass(final String name, final String outerName, final String innerName, final int access) {
+	public void visitInnerClass(String name, String outerName, String innerName, int access) {
 		InnerClassNode icn = new InnerClassNode(name, outerName, innerName, access);
 		innerClasses.add(icn);
 	}
 
 	@Override
-	public FieldVisitor visitField(final int access, final String name, final String desc, final String signature,
-	                               final Object value) {
+	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
 		FieldNode fn = new FieldNode(access, name, desc, signature, value);
 		fn.owner = this;
 		fields.add(fn);
@@ -261,8 +258,7 @@ public class ClassNode extends ClassVisitor {
 	}
 
 	@Override
-	public MethodVisitor visitMethod(final int access, final String name, final String desc, final String signature,
-	                                 final String[] exceptions) {
+	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 		MethodNode mn = new MethodNode(access, name, desc, signature, exceptions);
 		mn.owner = this;
 		methods.add(mn);
@@ -286,14 +282,12 @@ public class ClassNode extends ClassVisitor {
 	 * @param api an ASM API version. Must be one of {@link Opcodes#ASM4} or
 	 *            {@link Opcodes#ASM5}.
 	 */
-	public void check(final int api) {
+	public void check(int api) {
 		if (api == Opcodes.ASM4) {
-			if (visibleTypeAnnotations != null
-					&& visibleTypeAnnotations.size() > 0) {
+			if (visibleTypeAnnotations != null && visibleTypeAnnotations.size() > 0) {
 				throw new RuntimeException();
 			}
-			if (invisibleTypeAnnotations != null
-					&& invisibleTypeAnnotations.size() > 0) {
+			if (invisibleTypeAnnotations != null && invisibleTypeAnnotations.size() > 0) {
 				throw new RuntimeException();
 			}
 			for (FieldNode f : fields) {
@@ -338,15 +332,12 @@ public class ClassNode extends ClassVisitor {
 		n = visibleTypeAnnotations == null ? 0 : visibleTypeAnnotations.size();
 		for (i = 0; i < n; ++i) {
 			TypeAnnotationNode an = visibleTypeAnnotations.get(i);
-			an.accept(cv.visitTypeAnnotation(an.typeRef, an.typePath, an.desc,
-					true));
+			an.accept(cv.visitTypeAnnotation(an.typeRef, an.typePath, an.desc, true));
 		}
-		n = invisibleTypeAnnotations == null ? 0 : invisibleTypeAnnotations
-				.size();
+		n = invisibleTypeAnnotations == null ? 0 : invisibleTypeAnnotations.size();
 		for (i = 0; i < n; ++i) {
 			TypeAnnotationNode an = invisibleTypeAnnotations.get(i);
-			an.accept(cv.visitTypeAnnotation(an.typeRef, an.typePath, an.desc,
-					false));
+			an.accept(cv.visitTypeAnnotation(an.typeRef, an.typePath, an.desc, false));
 		}
 		n = attrs == null ? 0 : attrs.size();
 		for (i = 0; i < n; ++i) {

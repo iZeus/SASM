@@ -31,7 +31,7 @@ public abstract class ClassVisitor {
      *            the ASM API version implemented by this visitor. Must be one
      *            of {@link Opcodes#ASM4} or {@link Opcodes#ASM5}.
      */
-    public ClassVisitor(final int api) {
+    public ClassVisitor(int api) {
         this(api, null);
     }
 
@@ -45,7 +45,7 @@ public abstract class ClassVisitor {
      *            the class visitor to which this visitor must delegate method
      *            calls. May be null.
      */
-    public ClassVisitor(final int api, final ClassVisitor cv) {
+    public ClassVisitor(int api, ClassVisitor cv) {
         if (api != Opcodes.ASM4 && api != Opcodes.ASM5) {
             throw new IllegalArgumentException();
         }

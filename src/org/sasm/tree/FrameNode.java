@@ -73,7 +73,7 @@ public class FrameNode extends AbstractInsnNode {
      *            LabelNode objects (for primitive, reference and uninitialized
      *            types respectively - see {@link org.sasm.MethodVisitor}).
      */
-    public FrameNode(final int type, final int nLocal, final Object[] local, final int nStack, final Object[] stack) {
+    public FrameNode(int type, int nLocal, Object[] local, int nStack, Object[] stack) {
         super(-1);
         this.type = type;
         switch (type) {
@@ -108,12 +108,11 @@ public class FrameNode extends AbstractInsnNode {
      *            a method visitor.
      */
     @Override
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         switch (type) {
         case Opcodes.F_NEW:
         case Opcodes.F_FULL:
-            mv.visitFrame(type, local.size(), asArray(local), stack.size(),
-                    asArray(stack));
+            mv.visitFrame(type, local.size(), asArray(local), stack.size(), asArray(stack));
             break;
         case Opcodes.F_APPEND:
             mv.visitFrame(type, local.size(), asArray(local), 0, null);
@@ -131,7 +130,7 @@ public class FrameNode extends AbstractInsnNode {
     }
 
     @Override
-    public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
+    public AbstractInsnNode clone(Map<LabelNode, LabelNode> labels) {
         FrameNode clone = new FrameNode();
         clone.type = type;
         if (local != null) {
@@ -159,11 +158,11 @@ public class FrameNode extends AbstractInsnNode {
 
     // ------------------------------------------------------------------------
 
-    private static List<Object> asList(final int n, final Object[] o) {
+    private static List<Object> asList(int n, Object[] o) {
         return Arrays.asList(o).subList(0, n);
     }
 
-    private static Object[] asArray(final List<Object> l) {
+    private static Object[] asArray(List<Object> l) {
         Object[] objs = new Object[l.size()];
         for (int i = 0; i < objs.length; ++i) {
             Object o = l.get(i);

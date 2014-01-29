@@ -87,8 +87,7 @@ final class FieldWriter extends FieldVisitor {
      * @param value
      *            the field's constant value. May be <tt>null</tt>.
      */
-    FieldWriter(final ClassWriter cw, final int access, final String name, final String desc, final String signature,
-                final Object value) {
+    FieldWriter(ClassWriter cw, int access, String name, String desc, String signature, Object value) {
         super(Opcodes.ASM5);
         if (cw.firstField == null) {
             cw.firstField = this;
@@ -113,7 +112,7 @@ final class FieldWriter extends FieldVisitor {
     // ------------------------------------------------------------------------
 
     @Override
-    public AnnotationVisitor visitAnnotation(final String desc, final boolean visible) {
+    public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
         ByteVector bv = new ByteVector();
         // write type, and reserve space for values count
         bv.putShort(cw.newUTF8(desc)).putShort(0);
@@ -129,8 +128,7 @@ final class FieldWriter extends FieldVisitor {
     }
 
     @Override
-    public AnnotationVisitor visitTypeAnnotation(final int typeRef, final TypePath typePath, final String desc,
-                                                 final boolean visible) {
+    public AnnotationVisitor visitTypeAnnotation(int typeRef, TypePath typePath, String desc, boolean visible) {
         ByteVector bv = new ByteVector();
         // write target_type and target_info
         AnnotationWriter.putTarget(typeRef, typePath, bv);
@@ -148,7 +146,7 @@ final class FieldWriter extends FieldVisitor {
     }
 
     @Override
-    public void visitAttribute(final Attribute attr) {
+    public void visitAttribute(Attribute attr) {
         attr.next = attrs;
         attrs = attr;
     }
@@ -214,7 +212,7 @@ final class FieldWriter extends FieldVisitor {
      * @param out
      *            where the content of this field must be put.
      */
-    void put(final ByteVector out) {
+    void put(ByteVector out) {
         final int FACTOR = ClassWriter.TO_ACC_SYNTHETIC;
         int mask = Opcodes.ACC_DEPRECATED | ClassWriter.ACC_SYNTHETIC_ATTRIBUTE |
 		        ((access & ClassWriter.ACC_SYNTHETIC_ATTRIBUTE) / FACTOR);

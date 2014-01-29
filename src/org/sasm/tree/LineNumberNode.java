@@ -32,7 +32,7 @@ public class LineNumberNode extends AbstractInsnNode {
      * @param start
      *            the first instruction corresponding to this line number.
      */
-    public LineNumberNode(final int line, final LabelNode start) {
+    public LineNumberNode(int line, LabelNode start) {
         super(-1);
         this.line = line;
         this.start = start;
@@ -44,12 +44,12 @@ public class LineNumberNode extends AbstractInsnNode {
     }
 
     @Override
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         mv.visitLineNumber(line, start.getLabel());
     }
 
     @Override
-    public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
+    public AbstractInsnNode clone(Map<LabelNode, LabelNode> labels) {
         return new LineNumberNode(line, clone(start, labels));
     }
 }

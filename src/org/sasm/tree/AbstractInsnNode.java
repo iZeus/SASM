@@ -149,7 +149,7 @@ public abstract class AbstractInsnNode implements Serializable {
      * @param opcode
      *            the opcode of the instruction to be constructed.
      */
-    protected AbstractInsnNode(final int opcode) {
+    protected AbstractInsnNode(int opcode) {
         this.opcode = opcode;
         this.index = -1;
     }
@@ -207,20 +207,16 @@ public abstract class AbstractInsnNode implements Serializable {
      * @param mv
      *            a method visitor.
      */
-    protected final void acceptAnnotations(final MethodVisitor mv) {
-        int n = visibleTypeAnnotations == null ? 0 : visibleTypeAnnotations
-                .size();
+    protected final void acceptAnnotations(MethodVisitor mv) {
+        int n = visibleTypeAnnotations == null ? 0 : visibleTypeAnnotations.size();
         for (int i = 0; i < n; ++i) {
             TypeAnnotationNode an = visibleTypeAnnotations.get(i);
-            an.accept(mv.visitInsnAnnotation(an.typeRef, an.typePath, an.desc,
-                    true));
+            an.accept(mv.visitInsnAnnotation(an.typeRef, an.typePath, an.desc, true));
         }
-        n = invisibleTypeAnnotations == null ? 0 : invisibleTypeAnnotations
-                .size();
+        n = invisibleTypeAnnotations == null ? 0 : invisibleTypeAnnotations.size();
         for (int i = 0; i < n; ++i) {
             TypeAnnotationNode an = invisibleTypeAnnotations.get(i);
-            an.accept(mv.visitInsnAnnotation(an.typeRef, an.typePath, an.desc,
-                    false));
+            an.accept(mv.visitInsnAnnotation(an.typeRef, an.typePath, an.desc, false));
         }
     }
 
@@ -232,8 +228,7 @@ public abstract class AbstractInsnNode implements Serializable {
      * @return a copy of this instruction. The returned instruction does not
      *         belong to any {@link InsnList}.
      */
-    public abstract AbstractInsnNode clone(
-            final Map<LabelNode, LabelNode> labels);
+    public abstract AbstractInsnNode clone(Map<LabelNode, LabelNode> labels);
 
     /**
      * Returns the clone of the given label.
@@ -244,8 +239,7 @@ public abstract class AbstractInsnNode implements Serializable {
      *            a map from LabelNodes to cloned LabelNodes.
      * @return the clone of the given label.
      */
-    static LabelNode clone(final LabelNode label,
-            final Map<LabelNode, LabelNode> map) {
+    static LabelNode clone(LabelNode label, Map<LabelNode, LabelNode> map) {
         return map.get(label);
     }
 
@@ -258,8 +252,7 @@ public abstract class AbstractInsnNode implements Serializable {
      *            a map from LabelNodes to cloned LabelNodes.
      * @return the clones of the given labels.
      */
-    static LabelNode[] clone(final List<LabelNode> labels,
-            final Map<LabelNode, LabelNode> map) {
+    static LabelNode[] clone(List<LabelNode> labels, Map<LabelNode, LabelNode> map) {
         LabelNode[] clones = new LabelNode[labels.size()];
         for (int i = 0; i < clones.length; ++i) {
             clones[i] = map.get(labels.get(i));
@@ -274,10 +267,9 @@ public abstract class AbstractInsnNode implements Serializable {
      *            the source instruction.
      * @return this instruction.
      */
-    protected final AbstractInsnNode cloneAnnotations(
-            final AbstractInsnNode insn) {
+    protected final AbstractInsnNode cloneAnnotations(AbstractInsnNode insn) {
         if (insn.visibleTypeAnnotations != null) {
-            this.visibleTypeAnnotations = new ArrayList<TypeAnnotationNode>();
+            this.visibleTypeAnnotations = new ArrayList<>();
             for (int i = 0; i < insn.visibleTypeAnnotations.size(); ++i) {
                 TypeAnnotationNode src = insn.visibleTypeAnnotations.get(i);
                 TypeAnnotationNode ann = new TypeAnnotationNode(src.typeRef,
@@ -287,11 +279,10 @@ public abstract class AbstractInsnNode implements Serializable {
             }
         }
         if (insn.invisibleTypeAnnotations != null) {
-            this.invisibleTypeAnnotations = new ArrayList<TypeAnnotationNode>();
+            this.invisibleTypeAnnotations = new ArrayList<>();
             for (int i = 0; i < insn.invisibleTypeAnnotations.size(); ++i) {
                 TypeAnnotationNode src = insn.invisibleTypeAnnotations.get(i);
-                TypeAnnotationNode ann = new TypeAnnotationNode(src.typeRef,
-                        src.typePath, src.desc);
+                TypeAnnotationNode ann = new TypeAnnotationNode(src.typeRef, src.typePath, src.desc);
                 src.accept(ann);
                 this.invisibleTypeAnnotations.add(ann);
             }

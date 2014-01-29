@@ -29,7 +29,7 @@ public abstract class AnnotationVisitor {
      *            the ASM API version implemented by this visitor. Must be one
      *            of {@link Opcodes#ASM4} or {@link Opcodes#ASM5}.
      */
-    public AnnotationVisitor(final int api) {
+    public AnnotationVisitor(int api) {
         this(api, null);
     }
 
@@ -43,7 +43,7 @@ public abstract class AnnotationVisitor {
      *            the annotation visitor to which this visitor must delegate
      *            method calls. May be null.
      */
-    public AnnotationVisitor(final int api, final AnnotationVisitor av) {
+    public AnnotationVisitor(int api, AnnotationVisitor av) {
         if (api != Opcodes.ASM4 && api != Opcodes.ASM5) {
             throw new IllegalArgumentException();
         }

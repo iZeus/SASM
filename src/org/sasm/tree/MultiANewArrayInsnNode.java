@@ -30,7 +30,7 @@ public class MultiANewArrayInsnNode extends AbstractInsnNode {
      * @param dims
      *            number of dimensions of the array to allocate.
      */
-    public MultiANewArrayInsnNode(final String desc, final int dims) {
+    public MultiANewArrayInsnNode(String desc, int dims) {
         super(Opcodes.MULTIANEWARRAY);
         this.desc = desc;
         this.dims = dims;
@@ -42,13 +42,13 @@ public class MultiANewArrayInsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         mv.visitMultiANewArrayInsn(desc, dims);
         acceptAnnotations(mv);
     }
 
     @Override
-    public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
+    public AbstractInsnNode clone(Map<LabelNode, LabelNode> labels) {
         return new MultiANewArrayInsnNode(desc, dims).cloneAnnotations(this);
     }
 

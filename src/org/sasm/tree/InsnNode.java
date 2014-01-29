@@ -47,13 +47,13 @@ public class InsnNode extends AbstractInsnNode {
      *            a method visitor.
      */
     @Override
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         mv.visitInsn(opcode);
         acceptAnnotations(mv);
     }
 
     @Override
-    public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
+    public AbstractInsnNode clone(Map<LabelNode, LabelNode> labels) {
         return new InsnNode(opcode).cloneAnnotations(this);
     }
 }

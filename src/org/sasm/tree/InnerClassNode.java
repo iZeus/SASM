@@ -52,7 +52,7 @@ public class InnerClassNode {
      *            the access flags of the inner class as originally declared out
      *            the enclosing class.
      */
-    public InnerClassNode(final String name, final String outerName, final String innerName, final int access) {
+    public InnerClassNode(String name, String outerName, String innerName, int access) {
         this.name = name;
         this.outerName = outerName;
         this.innerName = innerName;
@@ -65,7 +65,7 @@ public class InnerClassNode {
      * @param cv
      *            a class visitor.
      */
-    public void accept(final ClassVisitor cv) {
+    public void accept(ClassVisitor cv) {
         cv.visitInnerClass(name, outerName, innerName, access);
     }
 }

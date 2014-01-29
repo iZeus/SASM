@@ -27,7 +27,7 @@ public class LdcInsnNode extends AbstractInsnNode {
      *            a non null {@link Integer}, a {@link Float}, a {@link Long}, a
      *            {@link Double} or a {@link String}.
      */
-    public LdcInsnNode(final Object cst) {
+    public LdcInsnNode(Object cst) {
         super(Opcodes.LDC);
         this.cst = cst;
     }
@@ -38,13 +38,13 @@ public class LdcInsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         mv.visitLdcInsn(cst);
         acceptAnnotations(mv);
     }
 
     @Override
-    public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
+    public AbstractInsnNode clone(Map<LabelNode, LabelNode> labels) {
         return new LdcInsnNode(cst).cloneAnnotations(this);
     }
 }

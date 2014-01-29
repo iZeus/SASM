@@ -143,7 +143,7 @@ final class Frame {
     /**
      * The TOP type. This is a BASE type.
      */
-    static final int TOP = BASE | 0;
+    static final int TOP = BASE;
 
     /**
      * The BOOLEAN type. This is a BASE type mainly used for array types.
@@ -498,7 +498,7 @@ final class Frame {
      *            the index of the local that must be returned.
      * @return the output frame local variable type at the given index.
      */
-    private int get(final int local) {
+    private int get(int local) {
         if (outputLocals == null || local >= outputLocals.length) {
             // this local has never been assigned out this basic block,
             // so it is still equal to its value out the input frame
@@ -522,7 +522,7 @@ final class Frame {
      * @param type
      *            the value of the local that must be set.
      */
-    private void set(final int local, final int type) {
+    private void set(int local, int type) {
         // creates and/or resizes the output local variables array if necessary
         if (outputLocals == null) {
             outputLocals = new int[10];
@@ -543,7 +543,7 @@ final class Frame {
      * @param type
      *            the type that must be pushed.
      */
-    private void push(final int type) {
+    private void push(int type) {
         // creates and/or resizes the output stack array if necessary
         if (outputStack == null) {
             outputStack = new int[10];
@@ -573,7 +573,7 @@ final class Frame {
      *            descriptor (out this case this method pushes its return type
      *            onto the output frame stack).
      */
-    private void push(final ClassWriter cw, final String desc) {
+    private void push(ClassWriter cw, String desc) {
         int type = type(cw, desc);
         if (type != 0) {
             push(type);
@@ -592,7 +592,7 @@ final class Frame {
      *            a type descriptor.
      * @return the int encoding of the given type.
      */
-    private static int type(final ClassWriter cw, final String desc) {
+    private static int type(ClassWriter cw, String desc) {
         String t;
         int index = desc.charAt(0) == '(' ? desc.indexOf(')') + 1 : 0;
         switch (desc.charAt(index)) {
@@ -677,7 +677,7 @@ final class Frame {
      * @param elements
      *            the number of types that must be popped.
      */
-    private void pop(final int elements) {
+    private void pop(int elements) {
         if (outputStackTop >= elements) {
             outputStackTop -= elements;
         } else {
@@ -697,7 +697,7 @@ final class Frame {
      *            descriptor (out this case this method pops the types
      *            corresponding to the method arguments).
      */
-    private void pop(final String desc) {
+    private void pop(String desc) {
         char c = desc.charAt(0);
         if (c == '(') {
             pop((Type.getArgumentsAndReturnSizes(desc) >> 2) - 1);
@@ -715,7 +715,7 @@ final class Frame {
      * @param var
      *            a type on a which a constructor is invoked.
      */
-    private void init(final int var) {
+    private void init(int var) {
         // creates and/or resizes the initializations array if necessary
         if (initializations == null) {
             initializations = new int[2];
@@ -741,7 +741,7 @@ final class Frame {
      * @return t or, if t is one of the types on which a constructor is invoked
      *         out the basic block, the type corresponding to this constructor.
      */
-    private int init(final ClassWriter cw, final int t) {
+    private int init(ClassWriter cw, int t) {
         int s;
         if (t == UNINITIALIZED_THIS) {
             s = OBJECT | cw.addType(cw.thisName);
@@ -780,8 +780,7 @@ final class Frame {
      * @param maxLocals
      *            the maximum number of local variables of this method.
      */
-    void initInputFrame(final ClassWriter cw, final int access,
-            final Type[] args, final int maxLocals) {
+    void initInputFrame(ClassWriter cw, int access, Type[] args, int maxLocals) {
         inputLocals = new int[maxLocals];
         inputStack = new int[0];
         int i = 0;
@@ -816,7 +815,7 @@ final class Frame {
      * @param item
      *            the val of the instructions, if any.
      */
-    void execute(final int opcode, final int arg, final ClassWriter cw, final Item item) {
+    void execute(int opcode, int arg, ClassWriter cw, Item item) {
         int t1, t2, t3, t4;
         switch (opcode) {
         case Opcodes.NOP:
@@ -1251,7 +1250,7 @@ final class Frame {
      * @return <tt>true</tt> if the input frame of the given label has been
      *         changed by this operation.
      */
-    boolean merge(final ClassWriter cw, final Frame frame, final int edge) {
+    boolean merge(ClassWriter cw, Frame frame, int edge) {
         boolean changed = false;
         int i, s, dim, kind, t;
 
@@ -1359,8 +1358,7 @@ final class Frame {
      * @return <tt>true</tt> if the type array has been modified by this
      *         operation.
      */
-    private static boolean merge(final ClassWriter cw, int t,
-            final int[] types, final int index) {
+    private static boolean merge(ClassWriter cw, int t, int[] types, int index) {
         int u = types[index];
         if (u == t) {
             // if the types are equal, merge(u,t)=u, so there is no change

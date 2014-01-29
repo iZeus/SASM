@@ -108,7 +108,7 @@ public class FieldNode extends FieldVisitor {
      *            must be an {@link Integer}, a {@link Float}, a {@link Long}, a
      *            {@link Double} or a {@link String}.
      */
-    public FieldNode(final int access, final String name, final String desc, final String signature, final Object value) {
+    public FieldNode(int access, String name, String desc, String signature, Object value) {
         this(Opcodes.ASM5, access, name, desc, signature, value);
     }
 
@@ -137,8 +137,7 @@ public class FieldNode extends FieldVisitor {
      *            must be an {@link Integer}, a {@link Float}, a {@link Long}, a
      *            {@link Double} or a {@link String}.
      */
-    public FieldNode(final int api, final int access, final String name, final String desc, final String signature,
-                     final Object value) {
+    public FieldNode(int api, int access, String name, String desc, String signature, Object value) {
         super(api);
         this.access = access;
         this.name = name;
@@ -152,7 +151,7 @@ public class FieldNode extends FieldVisitor {
     // ------------------------------------------------------------------------
 
     @Override
-    public AnnotationVisitor visitAnnotation(final String desc, final boolean visible) {
+    public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
         AnnotationNode an = new AnnotationNode(desc);
         if (visible) {
             if (visibleAnnotations == null) {
@@ -186,7 +185,7 @@ public class FieldNode extends FieldVisitor {
     }
 
     @Override
-    public void visitAttribute(final Attribute attr) {
+    public void visitAttribute(Attribute attr) {
         if (attrs == null) {
             attrs = new ArrayList<>(1);
         }
@@ -211,14 +210,12 @@ public class FieldNode extends FieldVisitor {
      *            an ASM API version. Must be one of {@link org.sasm.Opcodes#ASM4} or
      *            {@link org.sasm.Opcodes#ASM5}.
      */
-    public void check(final int api) {
+    public void check(int api) {
         if (api == Opcodes.ASM4) {
-            if (visibleTypeAnnotations != null
-                    && visibleTypeAnnotations.size() > 0) {
+            if (visibleTypeAnnotations != null && visibleTypeAnnotations.size() > 0) {
                 throw new RuntimeException();
             }
-            if (invisibleTypeAnnotations != null
-                    && invisibleTypeAnnotations.size() > 0) {
+            if (invisibleTypeAnnotations != null && invisibleTypeAnnotations.size() > 0) {
                 throw new RuntimeException();
             }
         }
@@ -230,7 +227,7 @@ public class FieldNode extends FieldVisitor {
      * @param cv
      *            a class visitor.
      */
-    public void accept(final ClassVisitor cv) {
+    public void accept(ClassVisitor cv) {
         FieldVisitor fv = cv.visitField(access, name, desc, signature, value);
         if (fv == null) {
             return;
@@ -249,15 +246,12 @@ public class FieldNode extends FieldVisitor {
         n = visibleTypeAnnotations == null ? 0 : visibleTypeAnnotations.size();
         for (i = 0; i < n; ++i) {
             TypeAnnotationNode an = visibleTypeAnnotations.get(i);
-            an.accept(fv.visitTypeAnnotation(an.typeRef, an.typePath, an.desc,
-                    true));
+            an.accept(fv.visitTypeAnnotation(an.typeRef, an.typePath, an.desc, true));
         }
-        n = invisibleTypeAnnotations == null ? 0 : invisibleTypeAnnotations
-                .size();
+        n = invisibleTypeAnnotations == null ? 0 : invisibleTypeAnnotations.size();
         for (i = 0; i < n; ++i) {
             TypeAnnotationNode an = invisibleTypeAnnotations.get(i);
-            an.accept(fv.visitTypeAnnotation(an.typeRef, an.typePath, an.desc,
-                    false));
+            an.accept(fv.visitTypeAnnotation(an.typeRef, an.typePath, an.desc, false));
         }
         n = attrs == null ? 0 : attrs.size();
         for (i = 0; i < n; ++i) {

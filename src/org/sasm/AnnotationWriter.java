@@ -73,8 +73,7 @@ final class AnnotationWriter extends AnnotationVisitor {
      *            where out <tt>parent</tt> the number of annotation values must
      *            be stored.
      */
-    AnnotationWriter(final ClassWriter cw, final boolean named, final ByteVector bv, final ByteVector parent,
-                     final int offset) {
+    AnnotationWriter(ClassWriter cw, boolean named, ByteVector bv, ByteVector parent, int offset) {
         super(Opcodes.ASM5);
         this.cw = cw;
         this.named = named;
@@ -88,7 +87,7 @@ final class AnnotationWriter extends AnnotationVisitor {
     // ------------------------------------------------------------------------
 
     @Override
-    public void visit(final String name, final Object value) {
+    public void visit(String name, Object value) {
         ++size;
         if (named) {
             bv.putShort(cw.newUTF8(name));
@@ -96,14 +95,14 @@ final class AnnotationWriter extends AnnotationVisitor {
         if (value instanceof String) {
             bv.put12('s', cw.newUTF8((String) value));
         } else if (value instanceof Byte) {
-            bv.put12('B', cw.newInteger(((Byte) value).byteValue()).index);
+            bv.put12('B', cw.newInteger((Byte) value).index);
         } else if (value instanceof Boolean) {
-            int v = ((Boolean) value).booleanValue() ? 1 : 0;
+            int v = (Boolean) value ? 1 : 0;
             bv.put12('Z', cw.newInteger(v).index);
         } else if (value instanceof Character) {
-            bv.put12('C', cw.newInteger(((Character) value).charValue()).index);
+            bv.put12('C', cw.newInteger((Character) value).index);
         } else if (value instanceof Short) {
-            bv.put12('S', cw.newInteger(((Short) value).shortValue()).index);
+            bv.put12('S', cw.newInteger((Short) value).index);
         } else if (value instanceof Type) {
             bv.put12('c', cw.newUTF8(((Type) value).getDescriptor()));
         } else if (value instanceof byte[]) {
@@ -161,7 +160,7 @@ final class AnnotationWriter extends AnnotationVisitor {
     }
 
     @Override
-    public void visitEnum(final String name, final String desc, final String value) {
+    public void visitEnum(String name, String desc, String value) {
         ++size;
         if (named) {
             bv.putShort(cw.newUTF8(name));
@@ -170,7 +169,7 @@ final class AnnotationWriter extends AnnotationVisitor {
     }
 
     @Override
-    public AnnotationVisitor visitAnnotation(final String name, final String desc) {
+    public AnnotationVisitor visitAnnotation(String name, String desc) {
         ++size;
         if (named) {
             bv.putShort(cw.newUTF8(name));
@@ -181,7 +180,7 @@ final class AnnotationWriter extends AnnotationVisitor {
     }
 
     @Override
-    public AnnotationVisitor visitArray(final String name) {
+    public AnnotationVisitor visitArray(String name) {
         ++size;
         if (named) {
             bv.putShort(cw.newUTF8(name));
@@ -225,7 +224,7 @@ final class AnnotationWriter extends AnnotationVisitor {
      * @param out
      *            where the annotations must be put.
      */
-    void put(final ByteVector out) {
+    void put(ByteVector out) {
         int n = 0;
         int size = 2;
         AnnotationWriter aw = this;
@@ -257,7 +256,7 @@ final class AnnotationWriter extends AnnotationVisitor {
      * @param out
      *            where the annotations must be put.
      */
-    static void put(final AnnotationWriter[] panns, final int off, final ByteVector out) {
+    static void put(AnnotationWriter[] panns, int off, ByteVector out) {
         int size = 1 + 2 * (panns.length - off);
         for (int i = off; i < panns.length; ++i) {
             size += panns[i] == null ? 0 : panns[i].getSize();

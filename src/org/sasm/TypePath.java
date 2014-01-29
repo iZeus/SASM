@@ -101,7 +101,7 @@ public class TypePath {
      *            {@link #toString()}. May be null or empty.
      * @return the corresponding TypePath object, or null if the path is empty.
      */
-    public static TypePath fromString(final String typePath) {
+    public static TypePath fromString(String typePath) {
         if (typePath == null || typePath.length() == 0) {
             return null;
         }

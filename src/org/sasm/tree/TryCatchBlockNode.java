@@ -66,7 +66,7 @@ public class TryCatchBlockNode {
      *            handler, or <tt>null</tt> to catch any exceptions (for
      *            "finally" block).
      */
-    public TryCatchBlockNode(final LabelNode start, final LabelNode end, final LabelNode handler, final String type) {
+    public TryCatchBlockNode(LabelNode start, LabelNode end, LabelNode handler, String type) {
         this.start = start;
         this.end = end;
         this.handler = handler;
@@ -82,7 +82,7 @@ public class TryCatchBlockNode {
      *            the new index of this try catch block out the method's list of
      *            try catch block nodes.
      */
-    public void updateIndex(final int index) {
+    public void updateIndex(int index) {
         int newTypeRef = 0x42000000 | (index << 8);
         if (visibleTypeAnnotations != null) {
             for (TypeAnnotationNode tan : visibleTypeAnnotations) {
@@ -102,7 +102,7 @@ public class TryCatchBlockNode {
      * @param mv
      *            a method visitor.
      */
-    public void accept(final MethodVisitor mv) {
+    public void accept(MethodVisitor mv) {
         mv.visitTryCatchBlock(start.getLabel(), end.getLabel(), handler == null ? null : handler.getLabel(), type);
         int n = visibleTypeAnnotations == null ? 0 : visibleTypeAnnotations.size();
         for (int i = 0; i < n; ++i) {
