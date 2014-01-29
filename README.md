@@ -1,4 +1,4 @@
 SASM
 ====
 
-SASM (Sedlar ASM) is an extension to the Java ASM bytecode tree-style library.
+SASM (Sedlar ASM) is a modified and extended version of OW2's ASM tree API, created with allowing ease of development.
