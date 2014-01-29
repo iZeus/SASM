@@ -277,4 +277,20 @@ public class InsnSearcher {
 		}
 		return -1;
 	}
+
+	/**
+	 * Finds the index of the given single-pattern.
+	 *
+	 * @param mn The method to search within.
+	 * @param pattern A single-pattern string ("getfield[desc=I]")
+	 * @return The last index of the first found matching instruction.
+	 */
+	public static int lastIndexOf(MethodNode mn, String pattern) {
+		List<Map<String, String>> parsed = parse(pattern).get(0);
+		AbstractInsnNode[] insn = mn.instructions.toArray();
+		for (int i = insn.length - 1; i > 0; i++) {
+			if (equals(insn[i], parsed)) return i;
+		}
+		return -1;
+	}
 }
