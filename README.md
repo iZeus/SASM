@@ -1,4 +1,4 @@
 SASM
 ====
 
-Extension to the Java ASM bytecode library
+SASM is an extension to the Java ASM bytecode tree-style library.
