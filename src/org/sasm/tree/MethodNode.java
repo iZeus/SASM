@@ -658,7 +658,7 @@ public class MethodNode extends MethodVisitor {
      * @param cv
      *            a class visitor.
      */
-    public void accept(ClassVisitor cv) {
+    public void accept(final ClassVisitor cv) {
         String[] exceptions = new String[this.exceptions.size()];
         this.exceptions.toArray(exceptions);
         MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions);
@@ -673,7 +673,7 @@ public class MethodNode extends MethodVisitor {
      * @param mv
      *            a method visitor.
      */
-    public void accept(MethodVisitor mv) {
+    public void accept(final MethodVisitor mv) {
         // visits the method parameters
         int i, j, n;
         n = parameters == null ? 0 : parameters.size();

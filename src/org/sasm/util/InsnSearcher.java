@@ -284,31 +284,58 @@ public class InsnSearcher {
 	 * Finds the index of the given single-pattern.
 	 *
 	 * @param mn The method to search within.
-	 * @param pattern A single-pattern string ("getfield[desc=I]")
+	 * @param pattern A pattern string ("getfield[desc=I]|putfield")
 	 * @return The index of the first found matching instruction.
 	 */
-	public static int indexOf(MethodNode mn, String pattern) {
-		List<Map<String, String>> parsed = parse(pattern).get(0);
-		AbstractInsnNode[] insn = mn.instructions.toArray();
-		for (int i = 0; i < insn.length; i++) {
-			if (equals(insn[i], parsed)) return i;
+	public static int indexOf(MethodNode mn, String... pattern) {
+		List<List<Map<String, String>>> parsed = parse(pattern);
+		int idx = -1;
+		loop: for (AbstractInsnNode insn : mn.instructions.toArray()) {
+			idx++;
+			for (int i = 0; i < parsed.size(); i++) {
+				if (insn == null) {
+					continue loop;
+				}
+				if (equals(insn, parsed.get(i))) {
+					if (i + 1 < parsed.size()) {
+						insn = next(insn, parsed.get(i + 1));
+					}
+				} else {
+					continue loop;
+				}
+			}
+			return idx;
 		}
 		return -1;
 	}
 
 	/**
-	 * Finds the last index of the given single-pattern.
+	 * Finds the last index of the given pattern.
 	 *
 	 * @param mn The method to search within.
-	 * @param pattern A single-pattern string ("getfield[desc=I]")
+	 * @param pattern A pattern string ("getfield[desc=I]|putfield")
 	 * @return The last index of the first found matching instruction.
 	 */
-	public static int lastIndexOf(MethodNode mn, String pattern) {
-		List<Map<String, String>> parsed = parse(pattern).get(0);
-		AbstractInsnNode[] insn = mn.instructions.toArray();
-		for (int i = insn.length - 1; i > 0; i++) {
-			if (equals(insn[i], parsed)) return i;
+	public static int lastIndexOf(MethodNode mn, String... pattern) {
+		List<List<Map<String, String>>> parsed = parse(pattern);
+		int index = -1;
+		int idx = -1;
+		loop: for (AbstractInsnNode insn : mn.instructions.toArray()) {
+			idx++;
+			for (int i = 0; i < parsed.size(); i++) {
+				if (insn == null) {
+					continue loop;
+				}
+				if (equals(insn, parsed.get(i))) {
+					if (i + 1 < parsed.size()) {
+						insn = next(insn, parsed.get(i + 1));
+					}
+				} else {
+					continue loop;
+				}
+			}
+			index = idx;
 		}
-		return -1;
+		return index != -1 ? index : -1;
 	}
 }
