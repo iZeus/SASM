@@ -1,7 +1,9 @@
 package org.sasm.util;
 
+import org.sasm.Opcodes;
 import org.sasm.tree.*;
 
+import java.io.File;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -151,11 +153,28 @@ public class InsnSearcher {
 	 * Gets the next instruction matching the given single-pattern.
 	 *
 	 * @param ain The instruction to start search at.
-	 * @param pattern The pattern to search for. ("getfield[desc=I]")
+	 * @param pattern The single-pattern to search for. ("getfield[desc=I]")
 	 * @return The next instruction matching the given single-pattern.
 	 */
 	public static AbstractInsnNode next(AbstractInsnNode ain, String pattern) {
 		return next(ain, parse(pattern).get(0));
+	}
+
+	/**
+	 * Gets the next instruction matching the given single-pattern.
+	 *
+	 * @param mn The method to start search within.
+	 * @param pattern The single-pattern to search for. ("getfield[desc=I]")
+	 * @return The next instruction matching the given single-pattern.
+	 */
+	public static AbstractInsnNode next(MethodNode mn, String pattern) {
+		if (mn.instructions.size() == 0) return null;
+		if (pattern.contains("dist=10")) {
+			pattern = pattern.replace("dist=10", "dist=" + (mn.instructions.size() - 2));
+		} else {
+			pattern += "[dist=" + (mn.instructions.size() - 2) + "]";
+		}
+		return next(mn.instructions.get(0), pattern);
 	}
 
 	private static AbstractInsnNode prev(AbstractInsnNode ain, List<Map<String, String>> parsed) {
